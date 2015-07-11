@@ -1,7 +1,8 @@
 import os
 import boto
+import json
 
-policy = {
+policy_template = {
 	"Version": "2012-10-17",
 	"Statement": [
 		{
@@ -36,15 +37,17 @@ class s3webpage:
     def update(self, local_path):
         for path, dirs, files in os.walk(local_path):
             for file in files:
-                key = self.bucket.new_key(os.path.join(path, file))
-                fp = open(os.path.join(path, file))
-                key.set_contents_from_file(fp)
-                fp.close()
-                print os.path.join(path, file)
-        self.bucket.configure_website(suffix="index.html")
-        import json
-        a = json.dumps(policy)
-        self.bucket.set_policy(a.replace("<bucket_name>",self.bucket_name))
+                print "upload:", os.path.join(path, file),
+                key = self.bucket.new_key(os.path.join(path, file).replace("\\", "/"))
+                key.set_contents_from_filename(os.path.join(path, file))
+                print 'done'
 
-    def get_url(self):
-        return self.bucket.get_website_endpoint()
+        self.bucket.configure_website(suffix="index.html")
+        self.bucket.set_policy(json.dumps(policy_template).replace("<bucket_name>",self.bucket_name))
+
+    def clear(self):
+        keys = self.bucket.list()
+        self.bucket.delete_keys([key.name for key in keys])
+
+    def get_url(self, local_path):
+        return self.bucket.get_website_endpoint() + "/" + local_path

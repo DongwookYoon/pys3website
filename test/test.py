@@ -16,12 +16,11 @@ def run():
         secret_key = auth["secret_access_key"]
     )
 
-    mywebpage.update(
-        local_path = "mywebsite"
-    )
+    mywebpage.clear()
 
-    print mywebpage.get_url()
+    mywebpage.update(local_path = "mywebsite")
 
+    print mywebpage.get_url(local_path = "mywebsite")
 
 if __name__ == "__main__":
     run()
