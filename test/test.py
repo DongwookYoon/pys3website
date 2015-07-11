@@ -7,7 +7,7 @@ def run():
     auth = json.loads(f.read())
     f.close()
 
-    mywebpage = pys3website.s3webpage(
+    mywebsite = pys3website.s3website(
         bucket_name = "richreview.edx",
         location = Location.DEFAULT,
         index_page = "index.html",
@@ -16,11 +16,11 @@ def run():
         secret_key = auth["secret_access_key"]
     )
 
-    mywebpage.clear()
+    mywebsite.clear()
 
-    mywebpage.update(local_path = "mywebsite")
+    mywebsite.update(local_path = "mywebsite")
 
-    print mywebpage.get_url(local_path = "mywebsite")
+    print mywebsite.get_url(local_path = "mywebsite")
 
 if __name__ == "__main__":
     run()

@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-setup(name='pys3webpage',
+setup(name='pys3website',
       version='0.1',
       description='boto wrapper for static webpage maintenance',
       author='Dongwook Yoon',
@@ -11,5 +11,5 @@ setup(name='pys3webpage',
       download_url= 'https://github.com/DongwookYoon/pys3website/tarball/0.1',
       keywords = ['AWS', 'S3', 'WebSite'],
       classifiers=[],
-      packages=['pys3webpage'],
+      packages=['pys3website'],
      )

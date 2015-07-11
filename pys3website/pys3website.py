@@ -19,7 +19,7 @@ policy_template = {
 	]
 }
 
-class s3webpage:
+class s3website:
     bucket = ""
     bucket_name = ""
     def __init__(self, bucket_name, location, index_page, err_page,
