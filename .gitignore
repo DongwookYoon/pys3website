@@ -1,0 +1,15 @@
+# AWS S3 authentication key
+test/s3authkey.json
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# PyCharm and WebStorm cache
+*.idea
+*.DS_Store
+
+# etc
+*.egg-info
+*.log
+*~
