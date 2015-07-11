@@ -34,11 +34,11 @@ class s3website:
                 self.bucket = conn.create_bucket(
                     bucket_name, location=location, policy='public-read')
 
-    def update(self, local_path):
+    def update(self, local_path, prefix):
         for path, dirs, files in os.walk(local_path):
             for file in files:
                 print "upload:", os.path.join(path, file),
-                key = self.bucket.new_key(os.path.join(path, file).replace("\\", "/"))
+                key = self.bucket.new_key(os.path.join(path, file).replace("\\", "/").replace(local_path, prefix, 1))
                 key.set_contents_from_filename(os.path.join(path, file))
                 print 'done'
 
@@ -51,5 +51,5 @@ class s3website:
         self.bucket.delete_keys([key.name for key in keys])
         print "done"
 
-    def get_url(self, local_path):
-        return self.bucket.get_website_endpoint() + "/" + local_path
+    def get_url(self, prefix):
+        return self.bucket.get_website_endpoint() + "/" + prefix

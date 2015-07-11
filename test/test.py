@@ -18,9 +18,9 @@ def run():
 
     mywebsite.clear()
 
-    mywebsite.update(local_path = "mywebsite")
+    mywebsite.update(local_path = "bogus/mywebsite", prefix = "testwebsite")
 
-    print mywebsite.get_url(local_path = "mywebsite")
+    print mywebsite.get_url(prefix = "testwebsite")
 
 if __name__ == "__main__":
     run()
