@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(name='pys3website',
       version='0.1',
-      description='boto wrapper for static webpage maintenance',
+      description='pys3website syncs a local folder to a static website bucket on Amazon S3',
       author='Dongwook Yoon',
       author_email='dy252@cornell.edu',
       url='https://github.com/DongwookYoon/pys3website',
