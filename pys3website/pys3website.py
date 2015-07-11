@@ -46,8 +46,10 @@ class s3webpage:
         self.bucket.set_policy(json.dumps(policy_template).replace("<bucket_name>",self.bucket_name))
 
     def clear(self):
+        print "clear",
         keys = self.bucket.list()
         self.bucket.delete_keys([key.name for key in keys])
+        print "done"
 
     def get_url(self, local_path):
         return self.bucket.get_website_endpoint() + "/" + local_path
