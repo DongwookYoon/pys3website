@@ -47,10 +47,10 @@ class s3website:
         self.bucket.configure_website(suffix="index.html")
         self.bucket.set_policy(json.dumps(policy_template).replace("<bucket_name>",self.bucket_name))
 
-    def clear(self):
-        print "clear",
+    def clear(self, prefix):
+        print "clear", prefix,
         keys = self.bucket.list()
-        self.bucket.delete_keys([key.name for key in keys])
+        self.bucket.delete_keys([key.name for key in keys if key.name[:len(prefix)+1] == prefix + "/"])
         print "done"
 
     def get_url(self, prefix):

@@ -16,7 +16,7 @@ def run():
         secret_key = auth["secret_access_key"]
     )
 
-    mywebsite.clear()
+    mywebsite.clear("richreview_web_app")
 
     mywebsite.update(local_path = "bogus/mywebsite", prefix = "testwebsite")
 
