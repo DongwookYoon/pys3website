@@ -37,10 +37,12 @@ class s3website:
     def update(self, local_path, prefix):
         for path, dirs, files in os.walk(local_path):
             for file in files:
-                print "upload:", os.path.join(path, file),
-                key = self.bucket.new_key(os.path.join(path, file).replace("\\", "/").replace(local_path, prefix, 1))
-                key.set_contents_from_filename(os.path.join(path, file))
-                print 'done'
+                key_path = os.path.join(path, file).replace("\\", "/").replace(local_path, prefix, 1)
+                if to_upload(get_path_components(key_path)):
+                    print "upload:", os.path.join(path, file),
+                    key = self.bucket.new_key(key_path)
+                    key.set_contents_from_filename(os.path.join(path, file))
+                    print 'done'
 
         self.bucket.configure_website(suffix="index.html")
         self.bucket.set_policy(json.dumps(policy_template).replace("<bucket_name>",self.bucket_name))
@@ -53,3 +55,15 @@ class s3website:
 
     def get_url(self, prefix):
         return self.bucket.get_website_endpoint() + "/" + prefix
+
+def get_path_components(path):
+    tpl = os.path.split(path)
+    if(tpl[0] == ""):
+        return [tpl[1]]
+    else:
+        return get_path_components(tpl[0]) + [tpl[1]]
+def to_upload(path_components):
+    for s in path_components:
+        if s[0] == ".":
+            return False
+    return True
